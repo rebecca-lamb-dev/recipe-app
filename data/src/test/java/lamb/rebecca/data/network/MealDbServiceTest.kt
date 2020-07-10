@@ -4,8 +4,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import lamb.rebecca.data.ResourceUtils
 import lamb.rebecca.data.network.MealDbService.Companion.mealDbService
-import lamb.rebecca.data.network.model.MealDataModel
-import lamb.rebecca.data.network.model.MeasuredIngredientDataModel
+import lamb.rebecca.data.network.model.MealEntity
+import lamb.rebecca.data.network.model.MeasuredIngredientEntity
 import lamb.rebecca.data.network.model.RandomMealResponse
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -65,46 +65,46 @@ class MealDbServiceTest {
     private fun expectedMealResponse() =
         RandomMealResponse(
             listOf(
-                MealDataModel(
+                MealEntity(
                     "52767", "Bakewell tart",
                     listOf(
-                        MeasuredIngredientDataModel(
+                        MeasuredIngredientEntity(
                             "plain flour",
                             "175g/6oz"
                         ),
-                        MeasuredIngredientDataModel(
+                        MeasuredIngredientEntity(
                             "chilled butter",
                             "75g/2½oz"
                         ),
-                        MeasuredIngredientDataModel(
+                        MeasuredIngredientEntity(
                             "cold water",
                             "2-3 tbsp"
                         ),
-                        MeasuredIngredientDataModel(
+                        MeasuredIngredientEntity(
                             "raspberry jam",
                             "1 tbsp"
                         ),
-                        MeasuredIngredientDataModel(
+                        MeasuredIngredientEntity(
                             "butter",
                             "125g/4½oz"
                         ),
-                        MeasuredIngredientDataModel(
+                        MeasuredIngredientEntity(
                             "caster sugar",
                             "125g/4½oz"
                         ),
-                        MeasuredIngredientDataModel(
+                        MeasuredIngredientEntity(
                             "ground almonds",
                             "125g/4½oz"
                         ),
-                        MeasuredIngredientDataModel(
+                        MeasuredIngredientEntity(
                             "free-range egg, beaten",
                             "1"
                         ),
-                        MeasuredIngredientDataModel(
+                        MeasuredIngredientEntity(
                             "almond extract",
                             "½ tsp"
                         ),
-                        MeasuredIngredientDataModel(
+                        MeasuredIngredientEntity(
                             "flaked almonds",
                             "50g/1¾oz"
                         )

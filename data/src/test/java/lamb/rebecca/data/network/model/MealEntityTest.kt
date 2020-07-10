@@ -6,16 +6,16 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
 
-class MealDataModelTest {
+class MealEntityTest {
 
     @Test
     fun canConvertToDomainModel() {
-        val mealDataModel = MealDataModel(
+        val mealDataModel = MealEntity(
             "12345", "bread", listOf(
-                MeasuredIngredientDataModel("ingredient", "measurement")
+                MeasuredIngredientEntity("ingredient", "measurement")
             )
         )
-        assertThat(mealDataModel.toModel()).isEqualTo(
+        assertThat(mealDataModel.toDomain()).isEqualTo(
             Meal(
                 "12345", "bread", listOf(
                     MeasuredIngredient("ingredient", "measurement")

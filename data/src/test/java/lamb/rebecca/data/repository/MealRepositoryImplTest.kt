@@ -3,7 +3,7 @@ package lamb.rebecca.data.repository
 import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.runBlocking
 import lamb.rebecca.data.network.MealDbService
-import lamb.rebecca.data.network.model.MealDataModel
+import lamb.rebecca.data.network.model.MealEntity
 import lamb.rebecca.data.network.model.RandomMealResponse
 import lamb.rebecca.domain.model.*
 import org.assertj.core.api.Assertions.assertThat
@@ -30,7 +30,7 @@ class MealRepositoryImplTest {
         `when`(mealDbService.getRandomMeal()).thenReturn(
             RandomMealResponse(
                 listOf(
-                    MealDataModel(
+                    MealEntity(
                         "123",
                         "bread"
                     )

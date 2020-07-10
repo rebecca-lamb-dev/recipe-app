@@ -8,7 +8,7 @@ class MeasuredIngredientDataModelTest {
 
     @Test
     fun canConvertToDomainModel() {
-        val measuredIngredientDataModel = MeasuredIngredientDataModel("ingredient", "measurement")
+        val measuredIngredientDataModel = MeasuredIngredientEntity("ingredient", "measurement")
         assertThat(measuredIngredientDataModel.toDomainModel()).isEqualTo(
             MeasuredIngredient(
                 "ingredient",

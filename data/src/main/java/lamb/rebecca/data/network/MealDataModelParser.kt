@@ -3,8 +3,8 @@ package lamb.rebecca.data.network
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.JsonDataException
 import com.squareup.moshi.JsonReader
-import lamb.rebecca.data.network.model.MealDataModel
-import lamb.rebecca.data.network.model.MeasuredIngredientDataModel
+import lamb.rebecca.data.network.model.MealEntity
+import lamb.rebecca.data.network.model.MeasuredIngredientEntity
 
 class MealDataModelParser {
     companion object {
@@ -27,7 +27,7 @@ class MealDataModelParser {
     private data class IndexedString(val index: Int, val value: String?)
 
     @FromJson
-    fun parse(reader: JsonReader): MealDataModel {
+    fun parse(reader: JsonReader): MealEntity {
         var id: String? = null
         var meal: String? = null
         val ingredientsMap = mutableMapOf<Int, String?>()
@@ -66,7 +66,7 @@ class MealDataModelParser {
             throw JsonDataException("Null meal parsing $id")
         }
 
-        return MealDataModel(
+        return MealEntity(
             id,
             meal,
             mapIngredientsToList(ingredientsMap, measurementsMap)
@@ -80,12 +80,12 @@ class MealDataModelParser {
         return IndexedString(index, value)
     }
 
-    private fun hasValue(value: String?) = value != null && value != ""
+    private fun hasValue(value: String?) = value != null && value.trim() != ""
 
     private fun mapIngredientsToList(
         ingredients: Map<Int, String?>,
         measurements: Map<Int, String?>
-    ): List<MeasuredIngredientDataModel> {
+    ): List<MeasuredIngredientEntity> {
         if (ingredients.size != measurements.size) {
             throw JsonDataException("Ingredients and measurements do not match $ingredients, $measurements")
         }
@@ -94,7 +94,7 @@ class MealDataModelParser {
             val measurement = measurements[entry.key]
 
             if (hasValue(ingredient) && hasValue(measurement)) {
-                MeasuredIngredientDataModel(
+                MeasuredIngredientEntity(
                     ingredient!!,
                     measurement!!
                 )

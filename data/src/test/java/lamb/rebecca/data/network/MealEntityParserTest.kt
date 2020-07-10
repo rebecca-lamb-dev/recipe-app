@@ -4,15 +4,15 @@ import com.squareup.moshi.JsonDataException
 import com.squareup.moshi.JsonReader
 import lamb.rebecca.data.MealFaker
 import lamb.rebecca.data.ResourceUtils
-import lamb.rebecca.data.network.model.MealDataModel
-import lamb.rebecca.data.network.model.MeasuredIngredientDataModel
+import lamb.rebecca.data.network.model.MealEntity
+import lamb.rebecca.data.network.model.MeasuredIngredientEntity
 import okio.buffer
 import okio.source
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
 
-class MealDataModelParserTest {
+class MealEntityParserTest {
 
     @Test
     fun parseMealDataModel() {
@@ -116,14 +116,14 @@ class MealDataModelParserTest {
     }
 
     private fun expectedMealDataModel() =
-        MealDataModel(
+        MealEntity(
             "52767", "Bakewell tart",
             listOf(
-                MeasuredIngredientDataModel(
+                MeasuredIngredientEntity(
                     "plain flour",
                     "175g/6oz"
                 ),
-                MeasuredIngredientDataModel(
+                MeasuredIngredientEntity(
                     "chilled butter",
                     "75g/2½oz"
                 )

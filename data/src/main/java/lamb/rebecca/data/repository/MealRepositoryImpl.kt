@@ -18,7 +18,7 @@ class MealRepositoryImpl @Inject constructor(private val mealDbService: MealDbSe
             if (response.meals.isEmpty()) {
                 return Failure(InvalidDataError)
             }
-            return Success(response.meals[0].toModel())
+            return Success(response.meals[0].toDomain())
         } catch (e: HttpException) {
             return Failure(HttpError(e.code(), e.message()))
         } catch (e: JsonDataException) {

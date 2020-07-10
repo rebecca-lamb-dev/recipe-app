@@ -2,13 +2,13 @@ package lamb.rebecca.data.network.model
 
 import lamb.rebecca.domain.model.Meal
 
-data class MealDataModel(
+data class MealEntity(
     val id: String,
     val name: String,
-    val ingredients: List<MeasuredIngredientDataModel> = listOf()
+    val ingredients: List<MeasuredIngredientEntity> = listOf()
 ) {
 
-    fun toModel() = Meal(
+    fun toDomain() = Meal(
         id,
         name,
         ingredients.map { it.toDomainModel() })
