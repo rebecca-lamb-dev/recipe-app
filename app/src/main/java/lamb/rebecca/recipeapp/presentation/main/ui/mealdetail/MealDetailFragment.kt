@@ -1,7 +1,6 @@
 package lamb.rebecca.recipeapp.presentation.main.ui.mealdetail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,9 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import lamb.rebecca.recipeapp.R
 import lamb.rebecca.recipeapp.databinding.MealDetailFragmentBinding
+import lamb.rebecca.recipeapp.presentation.main.ui.helpers.ImageLoader
+import lamb.rebecca.recipeapp.presentation.main.ui.model.MealModel
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MealDetailFragment : Fragment() {
@@ -22,21 +24,25 @@ class MealDetailFragment : Fragment() {
             MealDetailFragment()
     }
 
+    @Inject
+    lateinit var imageLoader: ImageLoader
+
     private val viewModel: MealDetailViewModel by activityViewModels()
 
     private lateinit var mealDetailTabAdapter: MealDetailTabAdapter
+    private lateinit var binding: MealDetailFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = MealDetailFragmentBinding.inflate(inflater)
+        binding = MealDetailFragmentBinding.inflate(inflater)
 
         mealDetailTabAdapter = MealDetailTabAdapter(this)
         binding.viewpager.adapter = mealDetailTabAdapter
 
         viewModel.meal.observe(viewLifecycleOwner, Observer { meal ->
-            binding.title.text = meal.name
+            displayMeal(meal)
         })
 
         TabLayoutMediator(binding.tabs, binding.viewpager) { tab, position ->
@@ -44,6 +50,13 @@ class MealDetailFragment : Fragment() {
         }.attach()
 
         return binding.root
+    }
+
+    private fun displayMeal(meal: MealModel) {
+        binding.title.text = meal.name
+        meal.thumbnail?.run {
+            imageLoader.loadImage(this, binding.image)
+        }
     }
 
     class MealDetailTabAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {

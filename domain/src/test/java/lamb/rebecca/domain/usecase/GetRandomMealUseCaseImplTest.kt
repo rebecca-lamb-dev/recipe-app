@@ -19,7 +19,7 @@ class GetRandomMealUseCaseImplTest {
 
     @Test
     fun getRandomMeal() = runBlocking<Unit> {
-        val expectedMeal = Meal("12345", "popcorn")
+        val expectedMeal = Meal("12345", "popcorn", listOf(), "thumb")
 
         `when`(mealRepository.getRandomMeal()).thenReturn(Success(expectedMeal))
 

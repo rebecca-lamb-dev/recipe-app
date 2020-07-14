@@ -2,10 +2,7 @@ package lamb.rebecca.recipeapp.presentation.main.ui.mealdetail
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
@@ -32,30 +29,24 @@ class IngredientsFragmentIT {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
-    @Module
-    @InstallIn(ActivityComponent::class)
-    class PresentationModule {
-
-        @Provides
-        fun providesGetRandomMeal(): GetRandomMealUseCase {
-            val getRandomMealUseCase = mockk<GetRandomMealUseCase>()
-            coEvery { getRandomMealUseCase() } returns Success(
-                Meal(
-                    "test", "test", listOf(
-                        MeasuredIngredient("ingredient 1", "measurement 1"),
-                        MeasuredIngredient("ingredient 2", "measurement 2")
-                    )
-                )
-            )
-
-            return getRandomMealUseCase
-        }
-
-    }
+    @BindValue
+    @JvmField
+    val getRandomMealUseCase: GetRandomMealUseCase = mockk()
 
     @Test
     fun canDisplayIngredientsInRecyclerView() {
+        coEvery { getRandomMealUseCase() } returns Success(
+            Meal(
+                "test", "test", listOf(
+                    MeasuredIngredient("ingredient 1", "measurement 1"),
+                    MeasuredIngredient("ingredient 2", "measurement 2")
+                ),
+                "test-thumbnail"
+            )
+        )
+
         val scenario = launchFragmentInHiltContainer<IngredientsFragment>()
+
 
         val firstItem = onView(RecyclerViewMatcher(R.id.ingredients).atPosition(0))
         firstItem.hasDescendentWithIdAndText(R.id.ingredient, "ingredient 1")

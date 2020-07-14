@@ -30,6 +30,7 @@ class MealDataModelParser {
     fun parse(reader: JsonReader): MealEntity {
         var id: String? = null
         var meal: String? = null
+        var thumbnail: String? = null
         val ingredientsMap = mutableMapOf<Int, String?>()
         val measurementsMap = mutableMapOf<Int, String?>()
 
@@ -38,6 +39,7 @@ class MealDataModelParser {
             when (reader.selectName(NAME_OPTIONS)) {
                 NAMES.ID.ordinal -> id = reader.nextString()
                 NAMES.NAME.ordinal -> meal = reader.nextString()
+                NAMES.THUMBNAIL.ordinal -> thumbnail = reader.nextString()
                 -1 -> {
                     if (reader.peek() == JsonReader.Token.NAME) {
                         val name = reader.nextName()
@@ -69,7 +71,8 @@ class MealDataModelParser {
         return MealEntity(
             id,
             meal,
-            mapIngredientsToList(ingredientsMap, measurementsMap)
+            mapIngredientsToList(ingredientsMap, measurementsMap),
+            thumbnail
         )
     }
 

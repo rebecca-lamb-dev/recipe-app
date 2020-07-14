@@ -30,13 +30,21 @@ class MealDetailViewModelTest {
     @ExperimentalCoroutinesApi
     @Test
     fun canGetRandomMeal() {
-        val expectedMeal = Meal("12345", "cake", listOf(MeasuredIngredient("ingredient", "measurement")))
+        val expectedMeal =
+            Meal("12345", "cake", listOf(MeasuredIngredient("ingredient", "measurement")), "thumb")
 
         coEvery { getRandomMealUseCase() } returns Success(expectedMeal)
         val mealDetailViewModel = MealDetailViewModel(getRandomMealUseCase)
 
         val result = mealDetailViewModel.meal.getOrAwaitValue()
-        assertThat(result).isEqualTo(MealModel("12345", "cake", listOf(MeasuredIngredientModel("ingredient", "measurement"))))
+        assertThat(result).isEqualTo(
+            MealModel(
+                "12345",
+                "cake",
+                listOf(MeasuredIngredientModel("ingredient", "measurement")),
+                "thumb"
+            )
+        )
     }
 
 }

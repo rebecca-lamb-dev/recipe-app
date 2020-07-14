@@ -127,7 +127,7 @@ class MealEntityParserTest {
                     "chilled butter",
                     "75g/2½oz"
                 )
-            )
+            ), "https://www.themealdb.com/images/media/meals/wyrqqq1468233628.jpg"
         )
 
 }

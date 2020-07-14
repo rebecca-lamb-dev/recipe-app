@@ -2,6 +2,7 @@
     <string name="app_name">Recipe App</string>
     <string name="instructions">Instructions</string>
     <string name="ingredients">Ingredients</string>
+    <string name="meal">meal</string>
 
     <string-array name="meal_detail_tabs">
         <item>Instructions</item>

@@ -32,7 +32,9 @@ class MealRepositoryImplTest {
                 listOf(
                     MealEntity(
                         "123",
-                        "bread"
+                        "bread",
+                        listOf(),
+                        "thumb"
                     )
                 )
             )
@@ -40,7 +42,7 @@ class MealRepositoryImplTest {
 
         val result = mealRepo.getRandomMeal()
 
-        assertThat(result).isEqualTo(Success(Meal("123", "bread")))
+        assertThat(result).isEqualTo(Success(Meal("123", "bread", listOf(), "thumb")))
     }
 
     @Test

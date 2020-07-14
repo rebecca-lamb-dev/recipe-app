@@ -121,7 +121,7 @@ class MealRepositoryImplIT {
                     "flaked almonds",
                     "50g/1¾oz"
                 )
-            )
+            ), "https://www.themealdb.com/images/media/meals/wyrqqq1468233628.jpg"
         )
 
 

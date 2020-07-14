@@ -5,12 +5,14 @@ import lamb.rebecca.domain.model.Meal
 data class MealEntity(
     val id: String,
     val name: String,
-    val ingredients: List<MeasuredIngredientEntity> = listOf()
+    val ingredients: List<MeasuredIngredientEntity> = listOf(),
+    val thumbnail: String?
 ) {
 
     fun toDomain() = Meal(
         id,
         name,
-        ingredients.map { it.toDomainModel() })
+        ingredients.map { it.toDomainModel() },
+        thumbnail)
 
 }
