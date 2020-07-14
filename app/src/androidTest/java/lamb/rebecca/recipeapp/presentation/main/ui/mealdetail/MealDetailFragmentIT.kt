@@ -52,13 +52,15 @@ class MealDetailFragmentIT {
                     MeasuredIngredient("1", "2"),
                     MeasuredIngredient("3", "4")
                 ),
-                "test-thumb"
+                "test-thumb", "category", "area"
             )
         )
 
         val scenario = launchFragmentInHiltContainer<MealDetailFragment>()
 
         onView(withId(R.id.title)).check(matches(withText("test")))
+        onView(withId(R.id.category)).check(matches(withText("category")))
+        onView(withId(R.id.area)).check(matches(withText("area")))
 
         onView(withId(R.id.main)).perform(ViewActions.swipeUp());
 

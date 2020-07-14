@@ -41,7 +41,7 @@ class IngredientsFragmentIT {
                     MeasuredIngredient("ingredient 1", "measurement 1"),
                     MeasuredIngredient("ingredient 2", "measurement 2")
                 ),
-                "test-thumbnail"
+                "test-thumbnail", "category", "area"
             )
         )
 

@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -53,7 +55,9 @@ class MealDetailFragment : Fragment() {
     }
 
     private fun displayMeal(meal: MealModel) {
-        binding.title.text = meal.name
+        (activity as AppCompatActivity).supportActionBar?.title = meal.name
+        binding.category.text = meal.category
+        binding.area.text = meal.area
         meal.thumbnail?.run {
             imageLoader.loadImage(this, binding.image)
         }

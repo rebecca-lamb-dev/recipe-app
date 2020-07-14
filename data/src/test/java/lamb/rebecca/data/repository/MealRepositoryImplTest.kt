@@ -2,6 +2,7 @@ package lamb.rebecca.data.repository
 
 import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.runBlocking
+import lamb.rebecca.data.MealFaker
 import lamb.rebecca.data.network.MealDbService
 import lamb.rebecca.data.network.model.MealEntity
 import lamb.rebecca.data.network.model.RandomMealResponse
@@ -25,24 +26,24 @@ class MealRepositoryImplTest {
 
     @Test
     fun canGetRandomMeal() = runBlocking<Unit> {
+        val mealFaker = MealFaker()
         val mealRepo = MealRepositoryImpl(mealDbService)
 
         `when`(mealDbService.getRandomMeal()).thenReturn(
             RandomMealResponse(
                 listOf(
-                    MealEntity(
-                        "123",
-                        "bread",
-                        listOf(),
-                        "thumb"
-                    )
+                    mealFaker.generateMealEntity()
                 )
             )
         )
 
         val result = mealRepo.getRandomMeal()
 
-        assertThat(result).isEqualTo(Success(Meal("123", "bread", listOf(), "thumb")))
+        assertThat(result).isEqualTo(
+            Success(
+                mealFaker.generateMeal()
+            )
+        )
     }
 
     @Test

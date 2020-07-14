@@ -6,13 +6,17 @@ data class MealEntity(
     val id: String,
     val name: String,
     val ingredients: List<MeasuredIngredientEntity> = listOf(),
-    val thumbnail: String?
+    val thumbnail: String?,
+    val category: String,
+    val area: String
 ) {
 
     fun toDomain() = Meal(
         id,
         name,
         ingredients.map { it.toDomainModel() },
-        thumbnail)
+        thumbnail,
+        category,
+        area)
 
 }

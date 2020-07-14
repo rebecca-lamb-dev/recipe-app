@@ -1,6 +1,7 @@
 package lamb.rebecca.data.repository
 
 import kotlinx.coroutines.runBlocking
+import lamb.rebecca.data.MealFaker
 import lamb.rebecca.data.ResourceUtils
 import lamb.rebecca.data.network.Api
 import lamb.rebecca.data.network.MealDbService
@@ -45,7 +46,7 @@ class MealRepositoryImplIT {
 
         val result = mealRepo.getRandomMeal()
 
-        assertThat(result).isEqualTo(Success(expectedMeal()))
+        assertThat(result).isEqualTo(Success(MealFaker().generateMeal()))
     }
 
     @Test
@@ -76,53 +77,5 @@ class MealRepositoryImplIT {
 
         assertThat(result).isEqualTo(Failure(HttpError(400, "Client Error")))
     }
-
-    private fun expectedMeal() =
-        Meal(
-            "52767", "Bakewell tart",
-            listOf(
-                MeasuredIngredient(
-                    "plain flour",
-                    "175g/6oz"
-                ),
-                MeasuredIngredient(
-                    "chilled butter",
-                    "75g/2½oz"
-                ),
-                MeasuredIngredient(
-                    "cold water",
-                    "2-3 tbsp"
-                ),
-                MeasuredIngredient(
-                    "raspberry jam",
-                    "1 tbsp"
-                ),
-                MeasuredIngredient(
-                    "butter",
-                    "125g/4½oz"
-                ),
-                MeasuredIngredient(
-                    "caster sugar",
-                    "125g/4½oz"
-                ),
-                MeasuredIngredient(
-                    "ground almonds",
-                    "125g/4½oz"
-                ),
-                MeasuredIngredient(
-                    "free-range egg, beaten",
-                    "1"
-                ),
-                MeasuredIngredient(
-                    "almond extract",
-                    "½ tsp"
-                ),
-                MeasuredIngredient(
-                    "flaked almonds",
-                    "50g/1¾oz"
-                )
-            ), "https://www.themealdb.com/images/media/meals/wyrqqq1468233628.jpg"
-        )
-
 
 }

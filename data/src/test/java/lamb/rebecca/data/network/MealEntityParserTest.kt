@@ -4,8 +4,6 @@ import com.squareup.moshi.JsonDataException
 import com.squareup.moshi.JsonReader
 import lamb.rebecca.data.MealFaker
 import lamb.rebecca.data.ResourceUtils
-import lamb.rebecca.data.network.model.MealEntity
-import lamb.rebecca.data.network.model.MeasuredIngredientEntity
 import okio.buffer
 import okio.source
 import org.assertj.core.api.Assertions.assertThat
@@ -19,8 +17,8 @@ class MealEntityParserTest {
         val parser = MealDataModelParser()
         val stream = ResourceUtils.readResourceAsStream("/meal.json")
         stream.source().buffer().use {
-            val mealDataModel = parser.parse(JsonReader.of(it))
-            assertThat(mealDataModel).isEqualTo(expectedMealDataModel())
+            val mealDataEntity = parser.parse(JsonReader.of(it))
+            assertThat(mealDataEntity).isEqualTo(MealFaker().generateMealEntity())
         }
     }
 
@@ -114,20 +112,5 @@ class MealEntityParserTest {
                 .hasMessage("Ingredients and measurements do not match {1=plain flour}, {1=null}")
         }
     }
-
-    private fun expectedMealDataModel() =
-        MealEntity(
-            "52767", "Bakewell tart",
-            listOf(
-                MeasuredIngredientEntity(
-                    "plain flour",
-                    "175g/6oz"
-                ),
-                MeasuredIngredientEntity(
-                    "chilled butter",
-                    "75g/2½oz"
-                )
-            ), "https://www.themealdb.com/images/media/meals/wyrqqq1468233628.jpg"
-        )
 
 }

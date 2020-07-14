@@ -1,6 +1,45 @@
 package lamb.rebecca.data
 
+import lamb.rebecca.data.network.model.MealEntity
+import lamb.rebecca.data.network.model.MeasuredIngredientEntity
+import lamb.rebecca.domain.model.Meal
+import lamb.rebecca.domain.model.MeasuredIngredient
+
 class MealFaker {
+
+    fun generateMealEntity() = MealEntity(
+        "52767", "Bakewell tart",
+        listOf(
+            MeasuredIngredientEntity(
+                "plain flour",
+                "175g/6oz"
+            ),
+            MeasuredIngredientEntity(
+                "chilled butter",
+                "75g/2½oz"
+            )
+        ),
+        "https://www.themealdb.com/images/media/meals/wyrqqq1468233628.jpg",
+        "Dessert",
+        "British"
+    )
+
+    fun generateMeal() = Meal(
+        "52767", "Bakewell tart",
+        listOf(
+            MeasuredIngredient(
+                "plain flour",
+                "175g/6oz"
+            ),
+            MeasuredIngredient(
+                "chilled butter",
+                "75g/2½oz"
+            )
+        ),
+        "https://www.themealdb.com/images/media/meals/wyrqqq1468233628.jpg",
+        "Dessert",
+        "British"
+    )
 
     fun generateMealJson(
         skipId: Boolean = false,

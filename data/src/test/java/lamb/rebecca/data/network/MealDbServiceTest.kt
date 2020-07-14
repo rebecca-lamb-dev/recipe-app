@@ -2,6 +2,7 @@ package lamb.rebecca.data.network
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import lamb.rebecca.data.MealFaker
 import lamb.rebecca.data.ResourceUtils
 import lamb.rebecca.data.network.MealDbService.Companion.mealDbService
 import lamb.rebecca.data.network.model.MealEntity
@@ -65,51 +66,7 @@ class MealDbServiceTest {
     private fun expectedMealResponse() =
         RandomMealResponse(
             listOf(
-                MealEntity(
-                    "52767", "Bakewell tart",
-                    listOf(
-                        MeasuredIngredientEntity(
-                            "plain flour",
-                            "175g/6oz"
-                        ),
-                        MeasuredIngredientEntity(
-                            "chilled butter",
-                            "75g/2½oz"
-                        ),
-                        MeasuredIngredientEntity(
-                            "cold water",
-                            "2-3 tbsp"
-                        ),
-                        MeasuredIngredientEntity(
-                            "raspberry jam",
-                            "1 tbsp"
-                        ),
-                        MeasuredIngredientEntity(
-                            "butter",
-                            "125g/4½oz"
-                        ),
-                        MeasuredIngredientEntity(
-                            "caster sugar",
-                            "125g/4½oz"
-                        ),
-                        MeasuredIngredientEntity(
-                            "ground almonds",
-                            "125g/4½oz"
-                        ),
-                        MeasuredIngredientEntity(
-                            "free-range egg, beaten",
-                            "1"
-                        ),
-                        MeasuredIngredientEntity(
-                            "almond extract",
-                            "½ tsp"
-                        ),
-                        MeasuredIngredientEntity(
-                            "flaked almonds",
-                            "50g/1¾oz"
-                        )
-                    ), "https://www.themealdb.com/images/media/meals/wyrqqq1468233628.jpg"
-                )
+                MealFaker().generateMealEntity()
             )
         )
 
