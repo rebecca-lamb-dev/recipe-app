@@ -55,7 +55,7 @@ class MealDetailFragment : Fragment() {
     }
 
     private fun displayMeal(meal: MealModel) {
-        (activity as AppCompatActivity).supportActionBar?.title = meal.name
+        binding.toolbar.title = meal.name
         binding.category.text = meal.category
         binding.area.text = meal.area
         meal.thumbnail?.run {

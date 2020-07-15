@@ -3,6 +3,8 @@
     <string name="instructions">Instructions</string>
     <string name="ingredients">Ingredients</string>
     <string name="meal">meal</string>
+    <string name="category">Category:</string>
+    <string name="area">Area:</string>
 
     <string-array name="meal_detail_tabs">
         <item>Instructions</item>
