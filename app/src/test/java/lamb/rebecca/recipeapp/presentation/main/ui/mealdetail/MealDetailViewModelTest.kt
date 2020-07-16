@@ -31,7 +31,15 @@ class MealDetailViewModelTest {
     @Test
     fun canGetRandomMeal() {
         val expectedMeal =
-            Meal("12345", "cake", listOf(MeasuredIngredient("ingredient", "measurement")), "thumb")
+            Meal(
+                "12345",
+                "cake",
+                listOf(MeasuredIngredient("ingredient", "measurement")),
+                "thumb",
+                "category",
+                "area",
+                "1\r\n2\r\n3"
+            )
 
         coEvery { getRandomMealUseCase() } returns Success(expectedMeal)
         val mealDetailViewModel = MealDetailViewModel(getRandomMealUseCase)
@@ -42,7 +50,10 @@ class MealDetailViewModelTest {
                 "12345",
                 "cake",
                 listOf(MeasuredIngredientModel("ingredient", "measurement")),
-                "thumb"
+                "thumb",
+                "category",
+                "area",
+                listOf("1", "2", "3")
             )
         )
     }

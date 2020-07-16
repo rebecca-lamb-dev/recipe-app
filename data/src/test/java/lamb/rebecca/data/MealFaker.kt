@@ -21,7 +21,8 @@ class MealFaker {
         ),
         "https://www.themealdb.com/images/media/meals/wyrqqq1468233628.jpg",
         "Dessert",
-        "British"
+        "British",
+        "1\r\n2\r\n3"
     )
 
     fun generateMeal() = Meal(
@@ -38,7 +39,8 @@ class MealFaker {
         ),
         "https://www.themealdb.com/images/media/meals/wyrqqq1468233628.jpg",
         "Dessert",
-        "British"
+        "British",
+        "1\r\n2\r\n3"
     )
 
     fun generateMealJson(
@@ -72,7 +74,7 @@ class MealFaker {
                   "strDrinkAlternate": null,
                   "strCategory": "Dessert",
                   "strArea": "British",
-                  "strInstructions": "To make the pastry",
+                  "strInstructions": "1\r\n2\r\n3\r\n",
                   "strMealThumb": "https://www.themealdb.com/images/media/meals/wyrqqq1468233628.jpg",
                   "strTags": "Tart,Baking,Alcoholic",
                   "strYoutube": "https://www.youtube.com/watch?v=1ahpSTf_Pvk",

@@ -11,7 +11,8 @@ data class MealModel(
     val ingredients: List<MeasuredIngredientModel> = listOf(),
     val thumbnail: String?,
     val category: String,
-    val area: String
+    val area: String,
+    val instructions: List<String>
 ) : Parcelable {
 
     companion object {
@@ -21,7 +22,12 @@ data class MealModel(
             meal.measuredIngredient.map { MeasuredIngredientModel.fromDomain(it) },
             meal.thumbnail,
             meal.category,
-            meal.area
+            meal.area,
+            generateFormattedInstructions(meal.instructions)
         )
+
+        private fun generateFormattedInstructions(instructions: String): List<String> {
+            return instructions.split("\r\n")
+        }
     }
 }

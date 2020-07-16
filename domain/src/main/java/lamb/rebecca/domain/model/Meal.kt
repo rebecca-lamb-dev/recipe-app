@@ -6,5 +6,6 @@ data class Meal(
     val measuredIngredient: List<MeasuredIngredient> = listOf(),
     val thumbnail: String?,
     val category: String,
-    val area: String) {
+    val area: String,
+    val instructions: String) {
 }

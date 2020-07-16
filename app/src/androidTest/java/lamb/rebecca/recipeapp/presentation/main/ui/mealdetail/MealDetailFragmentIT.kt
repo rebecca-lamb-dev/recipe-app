@@ -3,8 +3,7 @@ package lamb.rebecca.recipeapp.presentation.main.ui.mealdetail
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -52,23 +51,32 @@ class MealDetailFragmentIT {
                     MeasuredIngredient("1", "2"),
                     MeasuredIngredient("3", "4")
                 ),
-                "test-thumb", "category", "area"
+                "test-thumb", "category", "area",
+                "1\r\n2\r\n"
             )
         )
 
         val scenario = launchFragmentInHiltContainer<MealDetailFragment>()
 
-        onView(withId(R.id.title)).check(matches(withText("test")))
+        onView(withId(R.id.toolbar)).check(matches(hasDescendant(withText("test"))))
         onView(withId(R.id.category)).check(matches(withText("category")))
         onView(withId(R.id.area)).check(matches(withText("area")))
 
         onView(withId(R.id.main)).perform(ViewActions.swipeUp());
 
-        val firstItem = onView(RecyclerViewMatcher(R.id.ingredients).atPosition(0))
+        var firstItem = onView(RecyclerViewMatcher(R.id.instructions).atPosition(0))
+        firstItem.check(matches(withText("1")))
+
+        var secondItem = onView(RecyclerViewMatcher(R.id.instructions).atPosition(1))
+        secondItem.check(matches(withText("2")))
+
+
+        onView(withText(R.string.ingredients)).perform(ViewActions.click())
+        firstItem = onView(RecyclerViewMatcher(R.id.ingredients).atPosition(0))
         firstItem.hasDescendentWithIdAndText(R.id.ingredient, "1")
         firstItem.hasDescendentWithIdAndText(R.id.measurement, "2")
 
-        val secondItem = onView(RecyclerViewMatcher(R.id.ingredients).atPosition(1))
+        secondItem = onView(RecyclerViewMatcher(R.id.ingredients).atPosition(1))
         secondItem.hasDescendentWithIdAndText(R.id.ingredient, "3")
         secondItem.hasDescendentWithIdAndText(R.id.measurement, "4")
 

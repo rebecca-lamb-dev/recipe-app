@@ -69,9 +69,8 @@ class MealDetailFragment : Fragment() {
 
         override fun createFragment(position: Int): Fragment {
             if (position == 0) {
-                return IngredientsFragment.createIngredientsFragment()
+                return InstructionsFragment.createInstructionsFragment()
             } else {
-                // Temp
                 return IngredientsFragment.createIngredientsFragment()
             }
         }

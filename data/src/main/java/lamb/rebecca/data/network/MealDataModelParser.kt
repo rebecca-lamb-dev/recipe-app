@@ -33,6 +33,7 @@ class MealDataModelParser {
         var thumbnail: String? = null
         var category: String? = null
         var area: String? = null
+        var instructions: String? = null
         val ingredientsMap = mutableMapOf<Int, String?>()
         val measurementsMap = mutableMapOf<Int, String?>()
 
@@ -44,6 +45,7 @@ class MealDataModelParser {
                 NAMES.THUMBNAIL.ordinal -> thumbnail = reader.nextString()
                 NAMES.CATEGORY.ordinal -> category = reader.nextString()
                 NAMES.AREA.ordinal -> area = reader.nextString()
+                NAMES.INSTRUCTIONS.ordinal -> instructions = reader.nextString()
                 -1 -> {
                     if (reader.peek() == JsonReader.Token.NAME) {
                         val name = reader.nextName()
@@ -77,6 +79,9 @@ class MealDataModelParser {
         if (area == null) {
             throw JsonDataException("Null area parsing $id")
         }
+        if (instructions == null) {
+            throw JsonDataException("Null instructions parsing $id")
+        }
 
         return MealEntity(
             id,
@@ -84,7 +89,8 @@ class MealDataModelParser {
             mapIngredientsToList(ingredientsMap, measurementsMap),
             thumbnail,
             category,
-            area
+            area,
+            instructions
         )
     }
 
