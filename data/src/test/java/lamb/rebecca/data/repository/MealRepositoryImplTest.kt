@@ -4,16 +4,17 @@ import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.runBlocking
 import lamb.rebecca.data.MealFaker
 import lamb.rebecca.data.network.MealDbService
-import lamb.rebecca.data.network.model.MealEntity
 import lamb.rebecca.data.network.model.RandomMealResponse
 import lamb.rebecca.domain.model.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.BDDMockito.given
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.HttpException
+import java.net.UnknownHostException
 
 @RunWith(MockitoJUnitRunner::class)
 class MealRepositoryImplTest {
@@ -79,6 +80,19 @@ class MealRepositoryImplTest {
         val result = mealRepo.getRandomMeal()
 
         assertThat(result).isEqualTo(Failure(HttpError(400, "http error")))
+    }
+
+    @Test
+    fun canReturnUnknownHostError() = runBlocking<Unit> {
+        val mealRepo = MealRepositoryImpl(mealDbService)
+
+        given(mealDbService.getRandomMeal()).willAnswer {
+            throw UnknownHostException("Ooops")
+        }
+
+        val result = mealRepo.getRandomMeal()
+
+        assertThat(result).isEqualTo(Failure(UnknownHostError("Ooops")))
     }
 
 

@@ -18,7 +18,7 @@ class Api {
             return Retrofit.Builder()
                 .client(client)
                 //http://slowwly.robertomurray.co.uk/delay/5000/url/
-                .baseUrl(baseUrl) //TODO: Move me
+                .baseUrl("https://adfasdasds") //TODO: Move me
                 .addConverterFactory(
                     MoshiConverterFactory.create(
                         Moshi.Builder()
