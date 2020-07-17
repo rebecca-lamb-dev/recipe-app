@@ -5,6 +5,7 @@
     <string name="meal">meal</string>
     <string name="category">Category:</string>
     <string name="area">Area:</string>
+    <string name="meal_image">Meal Image</string>
 
     <string-array name="meal_detail_tabs">
         <item>Instructions</item>
