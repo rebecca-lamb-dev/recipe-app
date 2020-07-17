@@ -27,7 +27,7 @@ data class MealModel(
         )
 
         private fun generateFormattedInstructions(instructions: String): List<String> {
-            return instructions.split("\r\n")
+            return instructions.split("\r\n").filter { it != "" }
         }
     }
 }
