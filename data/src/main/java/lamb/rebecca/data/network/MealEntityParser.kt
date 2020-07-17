@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonReader
 import lamb.rebecca.data.network.model.MealEntity
 import lamb.rebecca.data.network.model.MeasuredIngredientEntity
 
-class MealDataModelParser {
+class MealEntityParser {
     companion object {
         private val NAME_OPTIONS = JsonReader.Options.of(
             "idMeal", "strMeal", "strCategory", "strDrinkAlternate",
@@ -114,16 +114,13 @@ class MealDataModelParser {
             val ingredient = entry.value
             val measurement = measurements[entry.key]
 
-            if (hasValue(ingredient) && hasValue(measurement)) {
-                MeasuredIngredientEntity(
-                    ingredient!!,
-                    measurement!!
-                )
-            } else if (hasValue(ingredient) != hasValue(measurement)) {
+            if (hasValue(ingredient)) {
+                return@mapNotNull if (hasValue(measurement)) MeasuredIngredientEntity(ingredient!!, measurement!!)
+                else MeasuredIngredientEntity(ingredient!!)
+            } else if (hasValue(measurement)) {
                 throw JsonDataException("Ingredients and measurements do not match $ingredients, $measurements")
-            } else {
-                null
             }
+            null
         }
     }
 }

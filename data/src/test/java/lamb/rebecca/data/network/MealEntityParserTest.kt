@@ -4,6 +4,8 @@ import com.squareup.moshi.JsonDataException
 import com.squareup.moshi.JsonReader
 import lamb.rebecca.data.MealFaker
 import lamb.rebecca.data.ResourceUtils
+import lamb.rebecca.data.network.model.MeasuredIngredientEntity
+import lamb.rebecca.domain.model.MeasuredIngredient
 import okio.buffer
 import okio.source
 import org.assertj.core.api.Assertions.assertThat
@@ -14,7 +16,7 @@ class MealEntityParserTest {
 
     @Test
     fun parseMealDataModel() {
-        val parser = MealDataModelParser()
+        val parser = MealEntityParser()
         val stream = ResourceUtils.readResourceAsStream("/meal.json")
         stream.source().buffer().use {
             val mealDataEntity = parser.parse(JsonReader.of(it))
@@ -24,7 +26,7 @@ class MealEntityParserTest {
 
     @Test
     fun errorsOnNullId() {
-        val parser = MealDataModelParser()
+        val parser = MealEntityParser()
         val stream = MealFaker().generateMealJson(id = null).byteInputStream()
         stream.source().buffer().use {
             assertThatThrownBy {
@@ -37,7 +39,7 @@ class MealEntityParserTest {
 
     @Test
     fun errorsOnMissingId() {
-        val parser = MealDataModelParser()
+        val parser = MealEntityParser()
         val stream = MealFaker().generateMealJson(skipId = true).byteInputStream()
         stream.source().buffer().use {
             assertThatThrownBy {
@@ -50,7 +52,7 @@ class MealEntityParserTest {
 
     @Test
     fun errorsOnNullName() {
-        val parser = MealDataModelParser()
+        val parser = MealEntityParser()
         val stream = MealFaker().generateMealJson(name = null).byteInputStream()
         stream.source().buffer().use {
             assertThatThrownBy {
@@ -63,7 +65,7 @@ class MealEntityParserTest {
 
     @Test
     fun errorsOnMissingName() {
-        val parser = MealDataModelParser()
+        val parser = MealEntityParser()
         val stream = MealFaker().generateMealJson(skipName = true).byteInputStream()
         stream.source().buffer().use {
             assertThatThrownBy {
@@ -75,21 +77,19 @@ class MealEntityParserTest {
     }
 
     @Test
-    fun errorsOnIngredientWithMismatchedingredientsAndMeasurements() {
-        val parser = MealDataModelParser()
-        val stream = MealFaker().generateMealJson(skipMeasurement = true).byteInputStream()
+    fun acceptsIngredientWithoutMeasurement() {
+        val parser = MealEntityParser()
+        val stream = MealFaker().generateMealJson(measurement = "").byteInputStream()
         stream.source().buffer().use {
-            assertThatThrownBy {
-                parser.parse(JsonReader.of(it))
-            }
-                .isExactlyInstanceOf(JsonDataException::class.java)
-                .hasMessage("Ingredients and measurements do not match {1=plain flour}, {}")
+            val meal = parser.parse(JsonReader.of(it))
+            assertThat(meal.ingredients).hasSize(1)
+            assertThat(meal.ingredients[0]).isEqualTo(MeasuredIngredientEntity("plain flour"))
         }
     }
 
     @Test
     fun errorsOnIngredientWithNullIngredient() {
-        val parser = MealDataModelParser()
+        val parser = MealEntityParser()
         val stream = MealFaker().generateMealJson(ingredient = null).byteInputStream()
         stream.source().buffer().use {
             assertThatThrownBy {
@@ -97,19 +97,6 @@ class MealEntityParserTest {
             }
                 .isExactlyInstanceOf(JsonDataException::class.java)
                 .hasMessage("Ingredients and measurements do not match {1=null}, {1=175g/6oz}")
-        }
-    }
-
-    @Test
-    fun errorsOnIngredientWithNullMeasurement() {
-        val parser = MealDataModelParser()
-        val stream = MealFaker().generateMealJson(measurement = null).byteInputStream()
-        stream.source().buffer().use {
-            assertThatThrownBy {
-                parser.parse(JsonReader.of(it))
-            }
-                .isExactlyInstanceOf(JsonDataException::class.java)
-                .hasMessage("Ingredients and measurements do not match {1=plain flour}, {1=null}")
         }
     }
 

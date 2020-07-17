@@ -4,7 +4,7 @@ import lamb.rebecca.domain.model.MeasuredIngredient
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
-class MeasuredIngredientDataModelTest {
+class MeasuredIngredientEntityTest {
 
     @Test
     fun canConvertToDomainModel() {
@@ -13,6 +13,16 @@ class MeasuredIngredientDataModelTest {
             MeasuredIngredient(
                 "ingredient",
                 "measurement"
+            )
+        )
+    }
+
+    @Test
+    fun canConvertToDomainModelWithMissingMeasurement() {
+        val measuredIngredientDataModel = MeasuredIngredientEntity("ingredient")
+        assertThat(measuredIngredientDataModel.toDomainModel()).isEqualTo(
+            MeasuredIngredient(
+                "ingredient"
             )
         )
     }

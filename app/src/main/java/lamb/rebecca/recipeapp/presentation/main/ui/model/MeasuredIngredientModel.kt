@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 import lamb.rebecca.domain.model.MeasuredIngredient
 
 @Parcelize
-data class MeasuredIngredientModel(val ingredient: String, val measurement: String) : Parcelable {
+data class MeasuredIngredientModel(val ingredient: String, val measurement: String? = null) : Parcelable {
 
     companion object {
         fun fromDomain(ingredient: MeasuredIngredient) =

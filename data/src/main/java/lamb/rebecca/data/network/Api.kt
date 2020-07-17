@@ -22,7 +22,7 @@ class Api {
                 .addConverterFactory(
                     MoshiConverterFactory.create(
                         Moshi.Builder()
-                            .add(MealDataModelParser())
+                            .add(MealEntityParser())
                             .add(KotlinJsonAdapterFactory())
                             .build()
                     )

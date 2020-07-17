@@ -58,5 +58,25 @@ class IngredientsFragmentIT {
         secondItem.hasDescendentWithIdAndText(R.id.measurement, "measurement 2")
     }
 
+    @Test
+    fun canDisplayIngredientsWithoutMeasurement() {
+        coEvery { getRandomMealUseCase() } returns Success(
+            Meal(
+                "test", "test", listOf(
+                    MeasuredIngredient("ingredient 1")
+                ),
+                "test-thumbnail", "category", "area",
+                "1\r\n2\r\n3"
+            )
+        )
+
+        val scenario = launchFragmentInHiltContainer<IngredientsFragment>()
+
+
+        val firstItem = onView(RecyclerViewMatcher(R.id.ingredients).atPosition(0))
+        firstItem.hasDescendentWithIdAndText(R.id.ingredient, "ingredient 1")
+        firstItem.hasDescendentWithIdAndText(R.id.measurement, "")
+    }
+
 
 }
