@@ -17,12 +17,12 @@ import lamb.rebecca.domain.usecase.GetRandomMealUseCase
 import lamb.rebecca.recipeapp.R
 import lamb.rebecca.recipeapp.RecyclerViewMatcher
 import lamb.rebecca.recipeapp.launchFragmentInHiltContainer
-import lamb.rebecca.recipeapp.presentation.main.ui.PresentationModule
+import lamb.rebecca.recipeapp.presentation.main.ui.RandomMealModule
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@UninstallModules(PresentationModule::class)
+@UninstallModules(RandomMealModule::class)
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
 class InstructionsFragmentIT {

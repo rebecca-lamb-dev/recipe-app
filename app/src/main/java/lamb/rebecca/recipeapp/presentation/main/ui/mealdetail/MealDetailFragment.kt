@@ -22,6 +22,7 @@ import javax.inject.Inject
 class MealDetailFragment : Fragment() {
 
     companion object {
+        @JvmStatic
         fun newInstance() =
             MealDetailFragment()
     }

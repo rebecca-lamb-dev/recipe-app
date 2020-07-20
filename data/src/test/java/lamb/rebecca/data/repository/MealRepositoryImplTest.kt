@@ -4,7 +4,8 @@ import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.runBlocking
 import lamb.rebecca.data.MealFaker
 import lamb.rebecca.data.network.MealDbService
-import lamb.rebecca.data.network.model.RandomMealResponse
+import lamb.rebecca.data.network.model.MealListResponse
+import lamb.rebecca.data.network.model.RandomMealListResponse
 import lamb.rebecca.domain.model.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
@@ -31,7 +32,7 @@ class MealRepositoryImplTest {
         val mealRepo = MealRepositoryImpl(mealDbService)
 
         `when`(mealDbService.getRandomMeal()).thenReturn(
-            RandomMealResponse(
+            RandomMealListResponse(
                 listOf(
                     mealFaker.generateMealEntity()
                 )
@@ -62,7 +63,7 @@ class MealRepositoryImplTest {
     fun canReturnDataErrorForMissingData() = runBlocking<Unit> {
         val mealRepo = MealRepositoryImpl(mealDbService)
 
-        `when`(mealDbService.getRandomMeal()).thenReturn(RandomMealResponse(listOf()))
+        `when`(mealDbService.getRandomMeal()).thenReturn(RandomMealListResponse(listOf()))
 
         val result = mealRepo.getRandomMeal()
 

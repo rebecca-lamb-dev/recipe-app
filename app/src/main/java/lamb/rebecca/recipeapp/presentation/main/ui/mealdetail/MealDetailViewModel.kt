@@ -24,10 +24,7 @@ class MealDetailViewModel @ViewModelInject constructor(
         getRandomMeal()
     }
 
-    private fun getScope(): CoroutineScope {
-        scope?.run { return this }
-        return viewModelScope
-    }
+    private fun getScope() = scope ?: viewModelScope
 
     private fun getRandomMeal() {
         getScope().launch {

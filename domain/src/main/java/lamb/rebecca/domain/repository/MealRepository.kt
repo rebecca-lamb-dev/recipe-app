@@ -6,5 +6,6 @@ import lamb.rebecca.domain.model.Result
 interface MealRepository {
 
     suspend fun getRandomMeal(): Result<Meal>
+    suspend fun getMealsByLetter(letter: String): Result<List<Meal>>
 
 }

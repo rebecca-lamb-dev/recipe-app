@@ -31,3 +31,5 @@ data class MealModel(
         }
     }
 }
+
+fun List<Meal>.toModel() = map { MealModel.fromDomain(it) }

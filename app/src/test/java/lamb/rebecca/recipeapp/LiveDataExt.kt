@@ -6,6 +6,7 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
+// https://gist.github.com/JoseAlcerreca/35828c25fca123c8a115d6251cf3f45b#file-livedatatestutil-kt
 /* Copyright 2019 Google LLC.
    SPDX-License-Identifier: Apache-2.0 */
 fun <T> LiveData<T>.getOrAwaitValue(

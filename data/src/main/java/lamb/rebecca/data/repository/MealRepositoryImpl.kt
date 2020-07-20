@@ -2,6 +2,7 @@ package lamb.rebecca.data.repository
 
 import com.squareup.moshi.JsonDataException
 import lamb.rebecca.data.network.MealDbService
+import lamb.rebecca.data.network.model.Entity
 import lamb.rebecca.domain.model.*
 import lamb.rebecca.domain.repository.MealRepository
 import retrofit2.HttpException
@@ -13,20 +14,24 @@ import javax.inject.Singleton
 class MealRepositoryImpl @Inject constructor(private val mealDbService: MealDbService) :
     MealRepository {
 
-    override suspend fun getRandomMeal(): Result<Meal> {
-        try {
-            val response = mealDbService.getRandomMeal()
-            if (response.meals.isEmpty()) {
-                return Failure(InvalidDataError)
-            }
-            return Success(response.meals[0].toDomain())
+    private inline fun <A : Any, R : Entity<A>> executeRequest(block: () -> R): Result<A> {
+        return try {
+            Success(block().toDomain())
         } catch (e: HttpException) {
-            return Failure(HttpError(e.code(), e.message()))
+            Failure(HttpError(e.code(), e.message()))
         } catch (e: UnknownHostException) {
-            return Failure(UnknownHostError(e.message))
+            Failure(UnknownHostError(e.message))
         } catch (e: JsonDataException) {
-            return Failure(InvalidDataError)
+            Failure(InvalidDataError)
         }
+    }
+
+    override suspend fun getRandomMeal(): Result<Meal> {
+        return executeRequest { mealDbService.getRandomMeal() }
+    }
+
+    override suspend fun getMealsByLetter(letter: String): Result<List<Meal>> {
+        return executeRequest { mealDbService.getMealsForLetter(letter) }
     }
 
 }

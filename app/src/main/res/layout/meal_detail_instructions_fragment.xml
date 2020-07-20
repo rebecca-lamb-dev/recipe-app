@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/instructions_label"
         tools:itemCount="5"
-        tools:listitem="@layout/instruction_view"
+        tools:listitem="@layout/instruction_item"
         tools:orientation="vertical" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,15 +10,16 @@ data class MealEntity(
     val category: String,
     val area: String,
     val instructions: String
-) {
+) : Entity<Meal> {
 
-    fun toDomain() = Meal(
+    override fun toDomain() = Meal(
         id,
         name,
         ingredients.map { it.toDomainModel() },
         thumbnail,
         category,
         area,
-        instructions)
+        instructions
+    )
 
 }

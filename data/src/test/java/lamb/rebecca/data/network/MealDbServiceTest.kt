@@ -5,9 +5,8 @@ import kotlinx.coroutines.runBlocking
 import lamb.rebecca.data.MealFaker
 import lamb.rebecca.data.ResourceUtils
 import lamb.rebecca.data.network.MealDbService.Companion.mealDbService
-import lamb.rebecca.data.network.model.MealEntity
-import lamb.rebecca.data.network.model.MeasuredIngredientEntity
-import lamb.rebecca.data.network.model.RandomMealResponse
+import lamb.rebecca.data.network.model.MealListResponse
+import lamb.rebecca.data.network.model.RandomMealListResponse
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.assertj.core.api.Assertions.assertThat
@@ -60,11 +59,34 @@ class MealDbServiceTest {
         val service = mealDbService(retrofit)
 
         val mealResponse = service.getRandomMeal()
+        assertThat(mealResponse).isEqualTo(expectedRandomMealResponse())
+    }
+
+    @Test
+    fun mealDbService_canReturnMealsForLetter() = runBlocking<Unit> {
+        val exampleResponse = ResourceUtils.readResourceAsString("/random_meal_response.json")
+        mockWebServer.enqueue(
+            MockResponse()
+                .setResponseCode(200)
+                .setBody(exampleResponse)
+        )
+
+        val retrofit = Api.retrofit(mockWebServer.url("/").toString())
+        val service = mealDbService(retrofit)
+
+        val mealResponse = service.getMealsForLetter("a")
         assertThat(mealResponse).isEqualTo(expectedMealResponse())
     }
 
     private fun expectedMealResponse() =
-        RandomMealResponse(
+        MealListResponse(
+            listOf(
+                MealFaker().generateMealEntity()
+            )
+        )
+
+    private fun expectedRandomMealResponse() =
+        RandomMealListResponse(
             listOf(
                 MealFaker().generateMealEntity()
             )

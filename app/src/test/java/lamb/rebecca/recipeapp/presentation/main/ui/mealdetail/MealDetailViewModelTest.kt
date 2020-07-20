@@ -27,7 +27,6 @@ class MealDetailViewModelTest {
 
     val getRandomMealUseCase = mockk<GetRandomMealUseCase>()
 
-    @ExperimentalCoroutinesApi
     @Test
     fun canGetRandomMeal() {
         val expectedMeal =

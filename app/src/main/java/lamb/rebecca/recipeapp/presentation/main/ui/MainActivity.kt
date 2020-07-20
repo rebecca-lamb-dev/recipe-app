@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import lamb.rebecca.recipeapp.R
 import lamb.rebecca.recipeapp.presentation.main.ui.mealdetail.MealDetailFragment
+import lamb.rebecca.recipeapp.presentation.main.ui.meallist.MealsFragment
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -15,7 +16,8 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                     .replace(R.id.container,
-                        MealDetailFragment.newInstance()
+                        //MealDetailFragment.newInstance()
+                    MealsFragment.newInstance()
                     )
                     .commitNow()
         }
