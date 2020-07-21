@@ -7,9 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.meal_item.*
 import lamb.rebecca.recipeapp.databinding.MealsListFragmentBinding
+import lamb.rebecca.recipeapp.presentation.main.ui.helpers.ImageLoader
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -25,7 +28,13 @@ class MealsFragment : Fragment() {
     private val viewModel: MealsViewModel by viewModels()
 
     @Inject
-    lateinit var mealsAdapter : MealsAdapter
+    lateinit var imageLoader: ImageLoader
+
+    private val mealsAdapter: MealsAdapter by lazy { MealsAdapter(imageLoader, ::onClick) }
+
+    private fun onClick(id: String) {
+        findNavController().navigate(MealsFragmentDirections.actionMealsFragmentToMealDetailFragment())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

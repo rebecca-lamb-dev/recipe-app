@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/mealsFragment">
+    <fragment
+        android:id="@+id/mealsFragment"
+        android:name="lamb.rebecca.recipeapp.presentation.main.ui.meallist.MealsFragment"
+        android:label="meals_list_fragment"
+        tools:layout="@layout/meals_list_fragment" >
+        <action
+            android:id="@+id/action_mealsFragment_to_mealDetailFragment"
+            app:destination="@id/mealDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mealDetailFragment"
+        android:name="lamb.rebecca.recipeapp.presentation.main.ui.mealdetail.MealDetailFragment"
+        android:label="MealDetailFragment" />
+</navigation>

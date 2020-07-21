@@ -11,18 +11,22 @@ import lamb.rebecca.recipeapp.presentation.main.ui.helpers.ImageLoader
 import lamb.rebecca.recipeapp.presentation.main.ui.model.MealModel
 import javax.inject.Inject
 
-class MealsAdapter @Inject constructor(private val imageLoader: ImageLoader) :
+class MealsAdapter @Inject constructor(
+    private val imageLoader: ImageLoader,
+    private val clickListener: (id: String) -> Unit
+) :
     RecyclerView.Adapter<MealsAdapter.ViewHolder>() {
 
     private var items: List<MealModel> = listOf()
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         private val image: ImageView = view.findViewById(R.id.image)
         private val label: TextView = view.findViewById(R.id.label)
 
         fun bind(item: MealModel) {
             imageLoader.loadImage(item.thumbnail, image)
             label.text = item.name
+            view.setOnClickListener { clickListener(item.id) }
         }
 
     }
