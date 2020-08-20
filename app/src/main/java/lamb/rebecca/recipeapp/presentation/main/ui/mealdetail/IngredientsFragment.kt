@@ -5,15 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.navGraphViewModels
 import dagger.hilt.android.AndroidEntryPoint
+import lamb.rebecca.recipeapp.R
 import lamb.rebecca.recipeapp.databinding.MealDetailIngredientsFragmentBinding
 
 @AndroidEntryPoint
 class IngredientsFragment : Fragment() {
 
-    private val viewModel: MealDetailViewModel by activityViewModels()
+    private val viewModel: MealDetailViewModel by navGraphViewModels(R.id.mealDetailFragment) {
+        defaultViewModelProviderFactory
+    }
+
+    private lateinit var binding: MealDetailIngredientsFragmentBinding
 
     companion object {
         fun createIngredientsFragment(): IngredientsFragment {
@@ -26,13 +31,14 @@ class IngredientsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = MealDetailIngredientsFragmentBinding.inflate(inflater)
+        binding = MealDetailIngredientsFragmentBinding.inflate(inflater)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.meal.observe(viewLifecycleOwner, Observer { meal ->
             binding.ingredients.adapter = MealDetailIngredientsAdapter(meal.ingredients)
         })
-
-        return binding.root
     }
 
 }

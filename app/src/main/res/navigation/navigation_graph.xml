@@ -11,10 +11,18 @@
         tools:layout="@layout/meals_list_fragment" >
         <action
             android:id="@+id/action_mealsFragment_to_mealDetailFragment"
-            app:destination="@id/mealDetailFragment" />
+            app:destination="@id/mealDetailFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
     <fragment
         android:id="@+id/mealDetailFragment"
         android:name="lamb.rebecca.recipeapp.presentation.main.ui.mealdetail.MealDetailFragment"
-        android:label="MealDetailFragment" />
+        android:label="MealDetailFragment" >
+        <argument
+            android:name="meal_id"
+            app:argType="lamb.rebecca.recipeapp.presentation.main.ui.model.MealModel" />
+    </fragment>
 </navigation>

@@ -10,9 +10,9 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.meal_item.*
 import lamb.rebecca.recipeapp.databinding.MealsListFragmentBinding
 import lamb.rebecca.recipeapp.presentation.main.ui.helpers.ImageLoader
+import lamb.rebecca.recipeapp.presentation.main.ui.model.MealModel
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -32,19 +32,24 @@ class MealsFragment : Fragment() {
 
     private val mealsAdapter: MealsAdapter by lazy { MealsAdapter(imageLoader, ::onClick) }
 
-    private fun onClick(id: String) {
-        findNavController().navigate(MealsFragmentDirections.actionMealsFragmentToMealDetailFragment())
+    private fun onClick(meal: MealModel) {
+        findNavController().navigate(MealsFragmentDirections.actionMealsFragmentToMealDetailFragment(meal))
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        postponeEnterTransition()
         val binding = MealsListFragmentBinding.inflate(inflater, container, false)
 
         with(binding.root) {
             layoutManager = GridLayoutManager(context, 2)
             adapter = mealsAdapter
+            viewTreeObserver.addOnPreDrawListener {
+                startPostponedEnterTransition()
+                true
+            }
         }
 
         viewModel.meals.observe(viewLifecycleOwner, Observer {

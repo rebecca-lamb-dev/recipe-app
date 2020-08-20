@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class MealsAdapter @Inject constructor(
     private val imageLoader: ImageLoader,
-    private val clickListener: (id: String) -> Unit
+    private val clickListener: (meal: MealModel) -> Unit
 ) :
     RecyclerView.Adapter<MealsAdapter.ViewHolder>() {
 
@@ -26,7 +26,7 @@ class MealsAdapter @Inject constructor(
         fun bind(item: MealModel) {
             imageLoader.loadImage(item.thumbnail, image)
             label.text = item.name
-            view.setOnClickListener { clickListener(item.id) }
+            view.setOnClickListener { clickListener(item) }
         }
 
     }

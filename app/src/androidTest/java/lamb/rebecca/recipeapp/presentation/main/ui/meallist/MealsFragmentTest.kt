@@ -54,7 +54,7 @@ class MealsFragmentTest {
 
         coEvery { getMealsByLetterUseCase("b") } returns Success(listOf(expectedMeal))
 
-        val scenario = launchFragmentInHiltContainer<MealsFragment>()
+        launchFragmentInHiltContainer(MealsFragment::class.java)
 
         val firstItem = Espresso.onView(RecyclerViewMatcher(R.id.meal_list).atPosition(0))
         firstItem.hasDescendentWithIdAndText(R.id.label, "cake")

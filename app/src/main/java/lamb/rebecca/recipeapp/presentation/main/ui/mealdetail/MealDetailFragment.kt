@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.navGraphViewModels
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,7 +28,9 @@ class MealDetailFragment : Fragment() {
     @Inject
     lateinit var imageLoader: ImageLoader
 
-    private val viewModel: MealDetailViewModel by activityViewModels()
+    private val viewModel: MealDetailViewModel by navGraphViewModels(R.id.mealDetailFragment) {
+        defaultViewModelProviderFactory
+    }
 
     private lateinit var mealDetailTabAdapter: MealDetailTabAdapter
     private lateinit var binding: MealDetailFragmentBinding
@@ -40,19 +40,18 @@ class MealDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = MealDetailFragmentBinding.inflate(inflater)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mealDetailTabAdapter = MealDetailTabAdapter(this)
         binding.viewpager.adapter = mealDetailTabAdapter
-
-        viewModel.meal.observe(viewLifecycleOwner, Observer { meal ->
-            displayMeal(meal)
+        viewModel.meal.observe(viewLifecycleOwner, Observer {
+            displayMeal(it)
         })
-
         TabLayoutMediator(binding.tabs, binding.viewpager) { tab, position ->
             tab.text = resources.getStringArray(R.array.meal_detail_tabs)[position]
         }.attach()
-
-        return binding.root
     }
 
     private fun displayMeal(meal: MealModel) {
@@ -69,10 +68,10 @@ class MealDetailFragment : Fragment() {
         override fun getItemCount(): Int = 2
 
         override fun createFragment(position: Int): Fragment {
-            if (position == 0) {
-                return InstructionsFragment.createInstructionsFragment()
+            return if (position == 0) {
+                InstructionsFragment.createInstructionsFragment()
             } else {
-                return IngredientsFragment.createIngredientsFragment()
+                IngredientsFragment.createIngredientsFragment()
             }
         }
     }

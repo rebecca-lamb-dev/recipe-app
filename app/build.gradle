@@ -16,7 +16,7 @@ android {
 
     defaultConfig {
         applicationId "lamb.rebecca.recipeapp"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -76,6 +76,9 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
 
+    // Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
@@ -94,6 +97,7 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinx_coroutines_test_version"
     testImplementation 'android.arch.core:core-testing:1.1.1'
     testImplementation "io.mockk:mockk:1.10.0"
+    androidTestImplementation "androidx.navigation:navigation-testing:$navigation_version"
 
     androidTestImplementation 'com.google.dagger:hilt-android-testing:2.28-alpha'
     kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.28.1-alpha'

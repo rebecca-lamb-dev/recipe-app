@@ -1,13 +1,8 @@
 package lamb.rebecca.recipeapp.presentation.main.ui.mealdetail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import io.mockk.coEvery
-import io.mockk.mockk
+import androidx.lifecycle.SavedStateHandle
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import lamb.rebecca.domain.model.Meal
-import lamb.rebecca.domain.model.MeasuredIngredient
-import lamb.rebecca.domain.model.Success
-import lamb.rebecca.domain.usecase.GetRandomMealUseCase
 import lamb.rebecca.recipeapp.CoroutinesTestRule
 import lamb.rebecca.recipeapp.getOrAwaitValue
 import lamb.rebecca.recipeapp.presentation.main.ui.model.MealModel
@@ -25,23 +20,21 @@ class MealDetailViewModelTest {
     @get:Rule
     var couroutineRule = CoroutinesTestRule()
 
-    val getRandomMealUseCase = mockk<GetRandomMealUseCase>()
-
     @Test
-    fun canGetRandomMeal() {
+    fun getMeal() {
         val expectedMeal =
-            Meal(
+            MealModel(
                 "12345",
                 "cake",
-                listOf(MeasuredIngredient("ingredient", "measurement")),
+                listOf(MeasuredIngredientModel("ingredient", "measurement")),
                 "thumb",
                 "category",
                 "area",
-                "1\r\n2\r\n3"
+                listOf("1", "2", "3")
             )
 
-        coEvery { getRandomMealUseCase() } returns Success(expectedMeal)
-        val mealDetailViewModel = MealDetailViewModel(getRandomMealUseCase)
+        val mealDetailViewModel =
+            MealDetailViewModel(SavedStateHandle(mapOf(Pair("meal_id", expectedMeal))))
 
         val result = mealDetailViewModel.meal.getOrAwaitValue()
         assertThat(result).isEqualTo(
