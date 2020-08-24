@@ -2,9 +2,6 @@ package lamb.rebecca.recipeapp.presentation.main.ui.mealdetail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import lamb.rebecca.recipeapp.CoroutinesTestRule
-import lamb.rebecca.recipeapp.getOrAwaitValue
 import lamb.rebecca.recipeapp.presentation.main.ui.model.MealModel
 import lamb.rebecca.recipeapp.presentation.main.ui.model.MeasuredIngredientModel
 import org.assertj.core.api.Assertions.assertThat
@@ -15,10 +12,6 @@ class MealDetailViewModelTest {
 
     @get:Rule
     var instantTaskRule = InstantTaskExecutorRule()
-
-    @ExperimentalCoroutinesApi
-    @get:Rule
-    var couroutineRule = CoroutinesTestRule()
 
     @Test
     fun getMeal() {
@@ -36,7 +29,7 @@ class MealDetailViewModelTest {
         val mealDetailViewModel =
             MealDetailViewModel(SavedStateHandle(mapOf(Pair("meal_id", expectedMeal))))
 
-        val result = mealDetailViewModel.meal.getOrAwaitValue()
+        val result = mealDetailViewModel.meal.value
         assertThat(result).isEqualTo(
             MealModel(
                 "12345",
